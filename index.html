@@ -1,101 +1,100 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OttO的球形投影</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
     <div class="page-container">
-        <main class="main-content">
-            <div class="preview-card">
-                <div class="image-container">
-                    <div class="loading-indicator">加载中</div>
-                    <div class="canvas-wrapper">
-                        <canvas id="outputCanvas"></canvas>
-                    </div>
-                </div>
-                <div class="file-controls">
-                    <div class="file-input-wrapper">
-                        <input type="file" id="imageUpload" accept="image/*">
-                        <label for="imageUpload" class="file-input-label">选择图片</label>
-                    </div>
-                    <button id="downloadBtn" class="download-btn">下载结果</button>
-                </div>
+      <main class="main-content">
+        <div class="preview-card">
+          <div class="image-container">
+            <div class="loading-indicator">加载中</div>
+            <div class="canvas-wrapper">
+              <canvas id="outputCanvas"></canvas>
+            </div>
+          </div>
+          <div class="file-controls">
+            <div class="file-input-wrapper">
+              <input type="file" id="imageUpload" accept="image/*" />
+              <label for="imageUpload" class="file-input-label">选择图片</label>
+            </div>
+            <button id="downloadBtn" class="download-btn">下载结果</button>
+          </div>
+        </div>
+
+        <div class="controls-card">
+          <div class="controls-nav">
+            <button class="nav-btn active" data-tab="basic">基础调整</button>
+            <button class="nav-btn" data-tab="rotation">旋转调整</button>
+            <button class="nav-btn" data-tab="position">位置调整</button>
+          </div>
+
+          <div class="controls-content active" data-content="basic">
+            <div class="control-group">
+              <label class="control-label">缩放</label>
+              <div class="slider-container">
+                <button class="adjust-btn" data-input="scaleInput" data-adjust="-0.1">-</button>
+                <input type="range" id="scaleInput" min="0.5" max="2.5" step="0.1" value="1.5" />
+                <button class="adjust-btn" data-input="scaleInput" data-adjust="0.1">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="controls-content" data-content="rotation">
+            <div class="control-group">
+              <label class="control-label">X轴旋转</label>
+              <div class="slider-container">
+                <button class="adjust-btn" data-input="alphaInput" data-adjust="-1">-</button>
+                <input type="range" id="alphaInput" min="-180" max="180" step="1" value="4" />
+                <button class="adjust-btn" data-input="alphaInput" data-adjust="1">+</button>
+              </div>
             </div>
 
-            <div class="controls-card">
-                <div class="controls-nav">
-                    <button class="nav-btn active" data-tab="basic">基础调整</button>
-                    <button class="nav-btn" data-tab="rotation">旋转调整</button>
-                    <button class="nav-btn" data-tab="position">位置调整</button>
-                </div>
-
-                <div class="controls-content active" data-content="basic">
-                    <div class="control-group">
-                        <label class="control-label">缩放</label>
-                        <div class="slider-container">
-                            <button class="adjust-btn" data-input="scaleInput" data-adjust="-0.1">-</button>
-                            <input type="range" id="scaleInput" min="0.5" max="2.5" step="0.1" value="1.5">
-                            <button class="adjust-btn" data-input="scaleInput" data-adjust="0.1">+</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="controls-content" data-content="rotation">
-                    <div class="control-group">
-                        <label class="control-label">X轴旋转</label>
-                        <div class="slider-container">
-                            <button class="adjust-btn" data-input="alphaInput" data-adjust="-1">-</button>
-                            <input type="range" id="alphaInput" min="-180" max="180" step="1" value="4">
-                            <button class="adjust-btn" data-input="alphaInput" data-adjust="1">+</button>
-                        </div>
-                    </div>
-                    
-                    <div class="control-group">
-                        <label class="control-label">Y轴旋转</label>
-                        <div class="slider-container">
-                            <button class="adjust-btn" data-input="betaInput" data-adjust="-1">-</button>
-                            <input type="range" id="betaInput" min="-180" max="180" step="1" value="4">
-                            <button class="adjust-btn" data-input="betaInput" data-adjust="1">+</button>
-                        </div>
-                    </div>
-                    
-                    <div class="control-group">
-                        <label class="control-label">Z轴旋转</label>
-                        <div class="slider-container">
-                            <button class="adjust-btn" data-input="gammaInput" data-adjust="-1">-</button>
-                            <input type="range" id="gammaInput" min="-180" max="180" step="1" value="100">
-                            <button class="adjust-btn" data-input="gammaInput" data-adjust="1">+</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="controls-content" data-content="position">
-                    <div class="control-group">
-                        <label class="control-label">水平偏移</label>
-                        <div class="slider-container">
-                            <button class="adjust-btn" data-input="offsetHorInput" data-adjust="-0.1">-</button>
-                            <input type="range" id="offsetHorInput" min="-1" max="1" step="0.1" value="0">
-                            <button class="adjust-btn" data-input="offsetHorInput" data-adjust="0.1">+</button>
-                        </div>
-                    </div>
-                    
-                    <div class="control-group">
-                        <label class="control-label">垂直偏移</label>
-                        <div class="slider-container">
-                            <button class="adjust-btn" data-input="offsetVerInput" data-adjust="-0.1">-</button>
-                            <input type="range" id="offsetVerInput" min="-1" max="1" step="0.1" value="0.4">
-                            <button class="adjust-btn" data-input="offsetVerInput" data-adjust="0.1">+</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="control-group">
+              <label class="control-label">Y轴旋转</label>
+              <div class="slider-container">
+                <button class="adjust-btn" data-input="betaInput" data-adjust="-1">-</button>
+                <input type="range" id="betaInput" min="-180" max="180" step="1" value="4" />
+                <button class="adjust-btn" data-input="betaInput" data-adjust="1">+</button>
+              </div>
             </div>
-        </main>
+
+            <div class="control-group">
+              <label class="control-label">Z轴旋转</label>
+              <div class="slider-container">
+                <button class="adjust-btn" data-input="gammaInput" data-adjust="-1">-</button>
+                <input type="range" id="gammaInput" min="-180" max="180" step="1" value="100" />
+                <button class="adjust-btn" data-input="gammaInput" data-adjust="1">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="controls-content" data-content="position">
+            <div class="control-group">
+              <label class="control-label">水平偏移</label>
+              <div class="slider-container">
+                <button class="adjust-btn" data-input="offsetHorInput" data-adjust="-0.1">-</button>
+                <input type="range" id="offsetHorInput" min="-1" max="1" step="0.1" value="0" />
+                <button class="adjust-btn" data-input="offsetHorInput" data-adjust="0.1">+</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">垂直偏移</label>
+              <div class="slider-container">
+                <button class="adjust-btn" data-input="offsetVerInput" data-adjust="-0.1">-</button>
+                <input type="range" id="offsetVerInput" min="-1" max="1" step="0.1" value="0.4" />
+                <button class="adjust-btn" data-input="offsetVerInput" data-adjust="0.1">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
